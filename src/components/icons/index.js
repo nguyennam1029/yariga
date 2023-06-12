@@ -1,0 +1,11 @@
+// export const { default: IconEyeToggle } = require("./IconEyeToggle");
+export const { default: IconDashboard } = require("./IconDashboard");
+export const { default: IconProperty } = require("./IconProperty");
+export const { default: IconAgent } = require("./IconAgent");
+export const { default: IconReview } = require("./IconReview");
+export const { default: IconProfile } = require("./IconProfile");
+export const { default: IconLogout } = require("./IconLogout");
+export const { default: IconMessage } = require("./IconMessage");
+export const { default: IconSettings } = require("./IconSettings");
+export const { default: IconCross } = require("./IconCross");
+export const { default: IconBeds } = require("./IconBeds");
