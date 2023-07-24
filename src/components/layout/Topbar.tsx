@@ -4,7 +4,7 @@ import React from "react";
 
 const Topbar = () => {
   return (
-    <div className="flex items-center justify-between px-5 py-4 bg-whiteFC">
+    <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 py-4 shadow-md bg-grayfc">
       <div className="flex items-center gap-32">
         <Link href="#" className="flex items-center gap-3">
           <svg

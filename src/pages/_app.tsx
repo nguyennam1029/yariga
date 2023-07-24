@@ -1,5 +1,6 @@
 import "@/styles/globals.scss";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { AppProps } from "next/app";
 import { Manrope } from "next/font/google";
 // Create a client
@@ -15,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="manrope.className">
         <Component {...pageProps} />
       </div>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

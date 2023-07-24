@@ -9,3 +9,4 @@ export const { default: IconMessage } = require("./IconMessage");
 export const { default: IconSettings } = require("./IconSettings");
 export const { default: IconCross } = require("./IconCross");
 export const { default: IconBeds } = require("./IconBeds");
+export const { default: IconRating } = require("./IconRating");

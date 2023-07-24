@@ -8,7 +8,7 @@ const Sidebar = () => {
   const router = useRouter();
   const { pathname } = router;
   return (
-    <div className="min-h-screen mx-4 mt-6 bg-grayfc">
+    <div className="min-h-screen mx-2 mt-6 bg-grayfc">
       {sidebarLinks.length > 0 &&
         sidebarLinks.map((link) => (
           <SidebarLink

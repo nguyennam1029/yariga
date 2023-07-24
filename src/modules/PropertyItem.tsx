@@ -2,45 +2,54 @@ import { IconBeds, IconCross } from "@/components/icons";
 import IconLocation from "@/components/icons/IconLocation";
 import Image from "next/image";
 import React from "react";
+import { PropertyItemData } from "@/types/property.types";
+import Link from "next/link";
+
 // import trophim from "trophim-lapteff.jpg";
 interface PropertyItemProps {
-  children?: React.ReactNode;
+  item: PropertyItemData;
 }
-const PropertyItem = ({ children }: PropertyItemProps) => {
+const PropertyItem = ({ item }: PropertyItemProps) => {
   return (
-    <div className="flex gap-2">
-      <div className="relative">
+    <Link
+      href={{
+        pathname: "/property/[id]",
+        query: { id: item.id },
+      }}
+      className="flex gap-2 overflow-hidden "
+    >
+      <div className="relative h-[126px] w-[202px] overflow-hidden rounded-xl">
         <Image
-          src="/trophim-lapteff.jpg"
+          src={item.image && item.image.length > 0 ? item.image[0] : ""}
+          // src=""
           alt="setup"
-          width={200}
-          height={150}
-          className="object-cover rounded-xl"
+          fill
+          className="object-cover w-full h-full"
         ></Image>
       </div>
       <div className="flex-1">
         <span className="inline-block text-xs font-semibold text-primary py-2 px-[10px] rounded-[5px] bg-secondary mb-2">
-          $7400
+          ${item.price}
         </span>
         <h3 className="mb-1 text-base font-semibold text-primaryText">
-          Metro Jayakarta Hotel & Spa
+          {item.title}
         </h3>
         <div className="flex items-center gap-1 mb-2 text-gray80">
           <IconLocation></IconLocation>
-          <span>North Carolina, USA</span>
+          <span>{item.address}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconBeds></IconBeds>
-            <span className="text-xs font-medium">4 Beds</span>
+            <span className="text-xs font-medium">{item.info?.beds}</span>
           </div>
           <div className="flex items-center gap-1">
             <IconCross></IconCross>
-            <span className="text-xs font-medium">28M</span>
+            <span className="text-xs font-medium">{item.info?.area}</span>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
