@@ -1,7 +1,7 @@
 import React from "react";
 import { LayoutMain } from "@/components/layout";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addNewProperty, getProperty } from "@/store/property.service";
+import { addNewProperty } from "@/store/property.service";
 
 const create = () => {
   const queryClient = useQueryClient();

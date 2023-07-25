@@ -12,6 +12,7 @@ const Sidebar = () => {
       {sidebarLinks.length > 0 &&
         sidebarLinks.map((link) => (
           <SidebarLink
+            key={link.id}
             link={link}
             isActive={pathname === link.url}
           ></SidebarLink>

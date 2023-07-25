@@ -30,17 +30,18 @@ const example = {
 };
 
 // https://rose-funny-greyhound.cyclic.app/
+// : Promise <Properties | null | undefined>
 export async function getProperties(page: number | string, limit: number | string) {
   try {
-    const response = await axios.get<Properties>(`${API_URL}/property`, {
+    const response = await axios.get<Properties[]>(`${API_URL}/property`, {
       params: {
-        _page: page, // Trang cần lấy dữ liệu
-        _limit: limit // Số lượng phần tử trên mỗi trang
+        _page: page, 
+        _limit: limit 
       }
     })
     if(response.status === 200) {
       return {
-        data:response.data,
+        data :response.data,
       headers: response.headers,}
     }
     

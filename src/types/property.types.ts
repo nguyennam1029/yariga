@@ -32,4 +32,10 @@ export interface PropertyAgent {
   properties?: number;
   avatar?: string;
 }
-export type Properties = Pick<PropertyItemData,"id" | 'title' | 'address' | 'price'> &{facility: Pick<PropertyFacility,'beds' | 'area'> }[]
+export interface ResponseHeaders {
+  'content-type': string;
+  'x-total-count': string;
+}
+export type Properties = Pick<PropertyItemData,"id" | 'title' | 'address' | 'price'>
+ &{facility: Pick<PropertyFacility,'beds' | 'area'> }
+  & Pick<ResponseHeaders,'content-type' | 'x-total-count'>[]

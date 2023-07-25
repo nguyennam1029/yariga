@@ -10,5 +10,5 @@ const metadata = {
   url: "https://myapp.com",
 };
 // const API_URL = "http://localhost:3000/api";
-const API_URL = "https://rose-funny-greyhound.cyclic.app";
+const API_URL = "https://server-yariga2.vercel.app";
 export { API_URL, metadata };

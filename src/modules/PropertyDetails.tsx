@@ -3,6 +3,7 @@ import { IconRating } from "@/components/icons";
 import Spinner from "@/components/loadings/Spinner";
 import EffectCard from "@/components/swiper/EffectCard";
 import { getProperty } from "@/store/property.service";
+import { PropertyFacility, PropertyItemData } from "@/types/property.types";
 import capitalizeStr from "@/utils/toCapitalize";
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
@@ -42,7 +43,6 @@ const PropertyDetails = () => {
     refetchOnWindowFocus: false,
     staleTime: 15 * 100 * 1000,
   });
-
   const facilities = Object.entries(data?.facility || {});
 
   return (
@@ -174,11 +174,14 @@ const PropertyDetails = () => {
                 aria-label="agent"
                 className="flex flex-col items-center justify-center px-6 py-4 border rounded-lg border-graye4 bg-grayfc"
               >
-                <img
-                  src="https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80"
+                <Image
+                  src="/avatar.jpg"
+                  width={90}
+                  height={90}
                   className="w-[90px] aspect-square rounded-full object-cover mb-4"
                   alt=""
                 />
+
                 <h3 className="mb-2 text-lg font-semibold">Hussain Ahmed</h3>
                 <div className="text-sm text-gray80">North Carolina, USA</div>
                 <div className="my-2 font-semibold">10 Propertis</div>

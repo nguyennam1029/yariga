@@ -36,16 +36,16 @@ const PropertyItem = ({ item }: PropertyItemProps) => {
         </h3>
         <div className="flex items-center gap-1 mb-2 text-gray80">
           <IconLocation></IconLocation>
-          <span>{item.address}</span>
+          <span className="line-clamp-1">{item.address}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconBeds></IconBeds>
-            <span className="text-xs font-medium">{item.info?.beds}</span>
+            <span className="text-xs font-medium">{item.facility?.beds}</span>
           </div>
           <div className="flex items-center gap-1">
             <IconCross></IconCross>
-            <span className="text-xs font-medium">{item.info?.area}</span>
+            <span className="text-xs font-medium">{item.facility?.area}</span>
           </div>
         </div>
       </div>
