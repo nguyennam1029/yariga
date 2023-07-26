@@ -11,6 +11,7 @@ import { PropertyItemData } from "@/types/property.types";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
+import Heading from "@/components/heading/Heading";
 
 const _limit: number | string = 10;
 const property = () => {
@@ -41,9 +42,7 @@ const property = () => {
   return (
     <LayoutMain>
       <div className="flex items-center justify-between mb-5">
-        <h1 className="font-bold text-[25px] text-primaryText">
-          Property List
-        </h1>
+        <Heading text="Property List" />
         <Link
           href="/property/create"
           className="flex items-center justify-center px-5 py-3 text-white bg-primary text-sm font-medium rounded-[10px] leading-normal"
