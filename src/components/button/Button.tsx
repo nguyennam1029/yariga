@@ -4,6 +4,7 @@ type ButtonProps = {
   text?: string;
   className?: string;
   isLoading?: boolean;
+  type?: "button" | "submit" | "reset" | undefined;
   onClick?: () => void;
 };
 
@@ -11,6 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   text = "+ Add Property",
   className,
   isLoading = false,
+  type = "button",
   onClick,
 }) => {
   return (
@@ -18,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({
       {isLoading ? (
         <button
           disabled
-          type="button"
+          type={type}
           className={`flex items-center justify-center px-5 py-3 m-auto text-sm font-medium text-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl rounded-lg cursor-not-allowed hover:bg-blue-800 focus:outline-none focus:ring-blue-300 ${className}`}
         >
           <svg

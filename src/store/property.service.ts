@@ -1,8 +1,10 @@
 
 
 import { API_URL } from "@/config";
+import { TFilter } from "@/types/general.types";
 import { Properties, PropertyItemData } from "@/types/property.types";
 import axios from "axios"
+import { promises } from "dns";
 const example = {
   title: "Metro Jayakarta Hotel & Spa",
   address: "North NewYork, USA",
@@ -31,17 +33,15 @@ const example = {
 
 // https://rose-funny-greyhound.cyclic.app/
 // : Promise <Properties | null | undefined>
-export async function getProperties(page: number | string, limit: number | string) {
+export async function getProperties(params: TFilter) {
+ 
   try {
-    const response = await axios.get<Properties[]>(`${API_URL}/property`, {
-      params: {
-        _page: page, 
-        _limit: limit 
-      }
-    })
+    
+    const response = await axios.get<{properties: Properties[]}>(`${API_URL}/property`, {params})
     if(response.status === 200) {
+     
       return {
-        data :response.data,
+        data :response.data.properties,
       headers: response.headers,}
     }
     
@@ -67,12 +67,11 @@ export async function getProperty(id:number): Promise<PropertyItemData | null | 
 //   id: number;
 //   title: string;
 // }
-export async function addNewProperty() {
+export async function addNewProperty(data: PropertyItemData) {
+  console.log("🚀 ~ file: property.service.ts:76 ~ addNewProperty ~ data:", data)
   try {
-    const response = await axios.post(`${API_URL}/property`, {
-      ...example,
-    });
-    return [];
+    const response = await axios.post(`${API_URL}/property/create`, data);
+    return response;
   } catch (error) {
     console.log("addNewProperty ~ error:", error);
   }

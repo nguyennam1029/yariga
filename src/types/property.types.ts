@@ -24,7 +24,10 @@ export interface PropertyFacility {
   wifi?: boolean;
   parking?: boolean;
 }
-
+export type TDropdownData = {
+  value: string;
+  label: string;
+};
 export interface PropertyAgent {
   name?: string;
   phone?: string;

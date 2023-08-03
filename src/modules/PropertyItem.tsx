@@ -34,6 +34,7 @@ const PropertyItem = ({ item }: PropertyItemProps) => {
         <h3 className="mb-1 text-base font-semibold text-primaryText">
           {item.title}
         </h3>
+        <h4>{item.status}</h4>
         <div className="flex items-center gap-1 mb-2 text-gray80">
           <IconLocation></IconLocation>
           <span className="line-clamp-1">{item.address}</span>

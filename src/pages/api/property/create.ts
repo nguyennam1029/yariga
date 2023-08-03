@@ -16,8 +16,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     });
 
     fs.writeFileSync(filePath, JSON.stringify(jsonData));
-
-    res.status(200).json({ message: "Add property successfully!" });
+ // Thêm độ trễ 2 giây bằng cách sử dụng setTimeout
+    setTimeout(() => {
+      res.status(200).json({ message: "Add property successfully!" });
+    }, 2000);
   } else {
     res.status(405).json({ message: "Error!" });
   }
