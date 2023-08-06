@@ -53,7 +53,7 @@ export async function getProperties(params: TFilter) {
 
 export async function getProperty(id:number): Promise<PropertyItemData | null | undefined> {
   try {
-    const response = await axios.get(`${API_URL}/property/${id}`)
+    const response = await axios.get(`${API_URL}/property/get?id=${id}`)
     if(response.status === 200) {
       return response.data
     }
@@ -71,6 +71,27 @@ export async function addNewProperty(data: PropertyItemData) {
   console.log("🚀 ~ file: property.service.ts:76 ~ addNewProperty ~ data:", data)
   try {
     const response = await axios.post(`${API_URL}/property/create`, data);
+    return response;
+  } catch (error) {
+    console.log("addNewProperty ~ error:", error);
+  }
+}
+export async function deleteProperty(id: number) {
+  console.log("🚀 ~ file: property.service.ts:76 ~ addNewProperty ~ data:", id)
+  try {
+    const response = await axios.delete(`${API_URL}/property/delete/${id}`);
+    return response;
+  } catch (error) {
+    console.log("addNewProperty ~ error:", error);
+  }
+}
+
+export async function updateProperty(id: number, data: PropertyItemData) {
+ console.log("🚀 ~ file: property.service.ts:90 ~ updateProperty ~ id và data:",id, data)
+
+ 
+  try {
+    const response = await axios.put(`${API_URL}/property/put/${id}`, data);
     return response;
   } catch (error) {
     console.log("addNewProperty ~ error:", error);

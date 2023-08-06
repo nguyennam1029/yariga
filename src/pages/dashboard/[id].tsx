@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { LayoutMain } from "@/components/layout";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addNewProperty } from "@/store/property.service";
-import Heading from "@/components/heading/Heading";
 import Button from "@/components/button/Button";
-import Dropdown from "@/components/dropdown/Dropdown";
-import { useForm } from "react-hook-form";
-import { PropertyItemData, TDropdownData } from "@/types/property.types";
 import FormField from "@/components/input/FormField";
+import Heading from "@/components/heading/Heading";
+import React, { useEffect, useState } from "react";
 import ToggleSwitch from "@/components/toggle/ToggleSwitch";
-import { toast, Flip } from "react-toastify";
 import validationSchema from "@/utils/validationSchema";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Flip, toast } from "react-toastify";
+import { LayoutMain } from "@/components/layout";
+import { PropertyItemData, TDropdownData } from "@/types/property.types";
+import { useForm } from "react-hook-form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  addNewProperty,
+  getProperty,
+  updateProperty,
+} from "@/store/property.service";
 
 const dataOptionsType: TDropdownData[] = [
   { value: "", label: "Any Type" },
@@ -29,7 +32,22 @@ const dataOptionsStatus: TDropdownData[] = [
 ];
 
 const create = () => {
-  const [addProperty, setAddProperty] = useState([]);
+  const router = useRouter();
+  const id = parseInt(router.query.id as string);
+
+  const [property, setProperty] = useState<PropertyItemData>({});
+  const [formData, setFormData] = useState<PropertyItemData>({});
+
+  useQuery({
+    queryKey: ["property", id],
+    queryFn: () => getProperty(id),
+    onSuccess: (data: PropertyItemData) => {
+      setProperty(data);
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 15 * 100 * 1000,
+  });
+
   const {
     control,
     handleSubmit,
@@ -41,22 +59,47 @@ const create = () => {
     mode: "onSubmit",
     resolver: yupResolver(validationSchema),
   });
-
-  const queryClient = useQueryClient();
+  useEffect(() => {
+    // Khi giá trị trong property thay đổi, cập nhật giá trị ban đầu của form
+    setValue("title", property.title);
+    setValue("address", property.address);
+    setValue("rating", property.rating);
+    setValue("facility", property.facility);
+    setValue("status", property.status);
+    setValue("type", property.type);
+    setValue("price", property.price);
+    setValue("image", property.image);
+    setValue("country", property.country);
+    setValue("description", property.description);
+    setValue("state", property.state);
+    setValue("facilityBeds", property?.facility?.beds);
+    setValue("facility.baths", property?.facility?.baths);
+    setValue("facility.area", property?.facility?.area);
+    setValue("facility-Smoking-Area", property?.facility?.smookingArea);
+    setValue("facility.kitchen", property?.facility?.kitchen);
+    setValue("facility.balcony", property?.facility?.balcony);
+    setValue("facility.wifi", property?.facility?.wifi);
+    setValue("agentName", property?.agent?.name);
+    setValue("agentPhone", property?.agent?.phone);
+    setValue("agentAddress", property?.agent?.address);
+    setValue("agentProperties", property?.agent?.properties);
+  }, [property, setValue]);
+  // ======================================
+  //  const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: addNewProperty,
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["property"] });
-    },
+    mutationFn: (_) =>
+      updateProperty(id as number, formData as PropertyItemData),
   });
-  const onSubmit = async (data: PropertyItemData) => {
+  const handleUpdateForm = async (data: PropertyItemData): Promise<void> => {
+    console.log("🚀 ~ file: [id].tsx:74 ~ onSubmit ~ data:", data);
     if (typeof data.image === "string") {
       data.image = data.image.split(",");
     }
 
+    setFormData(data);
     try {
-      const res = await mutation.mutateAsync(data);
+      await mutation.mutateAsync(formData);
+      toast.success("Update success");
     } catch (error) {
       if (error) {
         toast.error("Please try again.", {
@@ -74,56 +117,12 @@ const create = () => {
     }
   };
 
-  // ======================================= UPLOAD IMAGE====================
-  // const handleUploadImage = async (e: any) => {
-  //   const file = e.target.files[0];
-  //   console.log(
-  //     "🚀 ~ file: create.tsx:74 ~ handleUploadImage ~ file:",
-  //     e.target.file
-  //   );
-  //   // const bodyFormData = new FormData();
-  //   // bodyFormData.append("image", file);
-  //   // const response = await axios({
-  //   //   method: "post",
-  //   //   url: imgbbAPI,
-  //   //   data: bodyFormData,
-  //   //   headers: {
-  //   //     "Content-Type": "multipart/form-data",
-  //   //   },
-  //   // });
-  // };
-
-  useEffect(() => {
-    const arrErroes = Object.values(errors);
-    if (arrErroes.length > 0) {
-      toast.error(arrErroes[0]?.message, {
-        pauseOnHover: false,
-        delay: 0,
-      });
-    }
-  }, [errors]);
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      toast.success("🦄 Wow so easy!", {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Flip,
-      });
-      reset();
-    }
-  }, [isSubmitSuccessful, reset]);
   return (
     <LayoutMain>
-      <Heading text="Add a new product" className="mb-5" />
+      <Heading text="Update product" className="mb-5" />
       <section className="bg-white dark:bg-gray-900">
         <div className="px-4 py-8 mx-auto lg:py-16">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleUpdateForm)}>
             <div className="grid grid-cols-3 gap-4 ">
               <FormField
                 label="Title"
@@ -146,14 +145,14 @@ const create = () => {
               />
               <FormField
                 label="Baths"
-                name="facilityBaths"
+                name="facility.baths"
                 control={control}
                 type="number"
                 placeholder="1,2,3..."
               />
               <FormField
                 label="Area"
-                name="facilityArea"
+                name="facility.area"
                 control={control}
                 placeholder="69M"
               />
@@ -184,31 +183,31 @@ const create = () => {
               </div>
 
               <ToggleSwitch
-                name="facilitySmoking-area"
+                name="facility-Smoking-Area"
                 label="Smoking Area"
                 control={control}
               />
 
               <ToggleSwitch
-                name="facilityKitchen"
+                name="facility.kitchen"
                 label="Kitchen"
                 control={control}
               />
 
               <ToggleSwitch
-                name="facilityBalcony"
+                name="facility.balcony"
                 label="Balcony"
                 control={control}
               />
 
               <ToggleSwitch
-                name="facilityWifi"
+                name="facility.wifi"
                 label="Wifi"
                 control={control}
               />
 
               <ToggleSwitch
-                name="facilityParking-area"
+                name="facility.parking-area"
                 label="Parking area"
                 control={control}
               />
@@ -269,7 +268,7 @@ const create = () => {
             </div>
 
             <Button
-              text=" + Add property"
+              text=" + Update"
               className="w-[126px] h-[46px] mt-8"
               type="submit"
               isLoading={isSubmitting}

@@ -11,3 +11,5 @@ export const { default: IconCross } = require("./IconCross");
 export const { default: IconBeds } = require("./IconBeds");
 export const { default: IconRating } = require("./IconRating");
 export const { default: IconSearch } = require("./IconSearch");
+export const { default: IconTrash } = require("./IconTrash");
+export const { default: IconEdit } = require("./IconEdit");

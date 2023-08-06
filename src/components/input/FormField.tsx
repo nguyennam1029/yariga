@@ -53,7 +53,7 @@ const FormField: React.FC<FormFieldProps> = ({
           render={({ field }) => (
             <RadioGroup value={field.value} onChange={field.onChange}>
               <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
-              <div className="flex gap-10">
+              <div className="flex flex-wrap gap-10">
                 {data.map((option) => (
                   <RadioGroup.Option key={option.value} value={option.value}>
                     {({ checked }) => (

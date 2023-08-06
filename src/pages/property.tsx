@@ -52,13 +52,9 @@ const property = () => {
     router.push(`/property?_page=${pageNumber}`);
   };
   const properties = data?.data;
-  console.log(
-    "🚀 ~ file: property.tsx:55 ~ property ~ properties:",
-    properties
-  );
 
   const totalProperties = Number(data?.headers["x-total-count"]) || 0;
-  console.log("🚀 ~ file: property.tsx:58 ~ property ~ totalProperties:", data);
+
   const totalPage = Math.ceil(totalProperties / _limit);
 
   // Handle Filter
